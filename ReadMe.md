@@ -9,9 +9,9 @@
 | 3     | 11    | Jul.  |
 ## CheckList
 + Level 0
-  - [ ] HTML & CSS
-  - [ ] Git & Github
-  - [ ] Networking 
+  - [x] HTML & CSS
+  - [x] Git & Github
+  - [x] Networking 
 + Level 1
   * JavaScript
   * Exprees.js  
