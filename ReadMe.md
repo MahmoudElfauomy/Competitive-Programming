@@ -13,6 +13,6 @@
   - [x] Git & Github
   - [x] Networking 
 + Level 1
-  * JavaScript
-  * Exprees.js  
+  - [x] JavaScript
+  - [ ] Exprees.js  
 
