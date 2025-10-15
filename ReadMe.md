@@ -9,13 +9,9 @@
 | 3     | 11    | Jul.  |
 ## CheckList
 + Level 0
-- [x] Install Node.js
-- [ ] Learn about npm (Node Package Manager)
-- [ ] Understand CommonJS & ES Modules
-- [ ] Build a simple HTTP server
-- [ ] Explore Express.js
-- [ ] Connect to a database (MongoDB / PostgreSQL)
-- [ ] Deploy a Node.js app
+  - [] HTML & CSS
+  - [] Git & Github
+  - [] Networking 
 + Level 1
   * JavaScript
   * Exprees.js  
