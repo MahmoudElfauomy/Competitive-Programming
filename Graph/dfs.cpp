@@ -72,10 +72,10 @@ void cycles ( int u , int p = -1 )
         if ( vis[v] )
         {
             ll pa = u ;
-            while ( !in_cycle[pa] ) 
+            while ( true ) 
             {
                 in_cycle[pa] = 1 ;
-                if ( pa == v ) break ;
+                if ( pa == v ) break ; 
                 pa = parent[pa] ;
             }
         }
