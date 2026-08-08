@@ -1,0 +1,18 @@
+// get how many number is divsible by sume primes number from 1 to n
+for (int j = 1; j < (1 << sz); j++)
+{
+    int bit = 0;
+    ll mult = 1;
+    for (int z = 0; z < pr.size(); z++)
+    {
+        if ((1 << z) & j)
+        {
+            mult *= pr[z];
+            bit++;
+        }
+    }
+    if (bit & 1)
+        diff += r / mult;
+    else
+        diff -= r / mult;
+}
