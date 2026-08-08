@@ -2,6 +2,8 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define el '\n'
+#define all(v) v.begin(), v.end()
+#define allr(v) v.rbegin(), v.rend()
 using namespace std ;
 
 const double PI = acos(-1.0) ;
