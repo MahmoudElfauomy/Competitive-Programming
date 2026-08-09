@@ -1,0 +1,133 @@
+// @prefix Lazy_PST
+// @description
+
+struct Node
+{
+    ll sum{}, lazy{};
+    Node *left, *right;
+
+    Node() : sum(0), lazy(0), left(nullptr), right(nullptr) {}
+    Node(ll sum) : sum(sum), lazy(0), left(nullptr), right(nullptr) {}
+
+    // Copy Constructor عشان نسهل إنشاء نسخة جديدة من النود
+    Node(Node *other)
+    {
+        if (other)
+        {
+            sum = other->sum;
+            lazy = other->lazy;
+            left = other->left;
+            right = other->right;
+        }
+        else
+        {
+            sum = lazy = 0;
+            left = right = nullptr;
+        }
+    }
+};
+
+struct PST
+{
+    int n;
+    vector<Node *> roots;
+
+    Node *merge(Node *l, Node *r)
+    {
+        if (!l)
+            return r;
+        if (!r)
+            return l;
+        Node *res = new Node();
+        res->sum = l->sum + r->sum;
+        return res;
+    }
+
+    Node *build(int lx, int rx, const vector<int> &a)
+    {
+        if (lx == rx)
+            return new Node(a[lx]);
+        int m = (lx + rx) >> 1;
+        return merge(build(lx, m, a), build(m + 1, rx, a));
+    }
+
+    Node *update(Node *node, int lx, int rx, int l, int r, ll val)
+    {
+        if (lx > r || rx < l)
+            return node; 
+
+        Node *cur = new Node(node); 
+
+        if (l <= lx && rx <= r)
+        { 
+            cur->lazy += val;
+            cur->sum += val * (rx - lx + 1);
+            return cur;
+        }
+
+        int m = (lx + rx) >> 1;
+        cur->left = update(cur->left, lx, m, l, r, val);
+        cur->right = update(cur->right, m + 1, rx, l, r, val);
+
+        ll child_sum = (cur->left ? cur->left->sum : 0) + (cur->right ? cur->right->sum : 0);
+        cur->sum = child_sum + cur->lazy * (rx - lx + 1);
+
+        return cur;
+    }
+
+    Node *query(Node *node, int lx, int rx, int l, int r, ll lazy_acc)
+    {
+        if (lx > r || rx < l)
+            return nullptr;
+
+        if (l <= lx && rx <= r)
+        {
+            Node *res = new Node();
+            res->sum = (node ? node->sum : 0) + lazy_acc * (rx - lx + 1);
+            return res;
+        }
+
+        int m = (lx + rx) >> 1;
+        ll cur_lazy = node ? node->lazy : 0;
+
+        Node *left_res = query(node ? node->left : nullptr, lx, m, l, r, lazy_acc + cur_lazy);
+        Node *right_res = query(node ? node->right : nullptr, m + 1, rx, l, r, lazy_acc + cur_lazy);
+
+        return merge(left_res, right_res);
+    }
+
+    int query_kth(Node *l_node, Node *r_node, int lx, int rx, ll k)
+    {
+        if (lx == rx)
+            return lx;
+        int m = (lx + rx) >> 1;
+
+        ll left_count = (r_node && r_node->left ? r_node->left->sum : 0) - (l_node && l_node->left ? l_node->left->sum : 0);
+
+        if (k <= left_count)
+            return query_kth(l_node ? l_node->left : nullptr, r_node ? r_node->left : nullptr, lx, m, k);
+        else
+            return query_kth(l_node ? l_node->right : nullptr, r_node ? r_node->right : nullptr, m + 1, rx, k - left_count);
+    }
+
+    PST(const vector<int> &a)
+    {
+        n = a.size();
+        roots.push_back(build(0, n - 1, a));
+    }
+
+    void push_back(int k)
+    {
+        roots.push_back(roots[k]);
+    }
+
+    void update(int k, int l, int r, ll x)
+    {
+        roots[k] = update(roots[k], 0, n - 1, l, r, x);
+    }
+
+    Node *query(int k, int l, int r)
+    {
+        return query(roots[k], 0, n - 1, l, r, 0);
+    }
+};
