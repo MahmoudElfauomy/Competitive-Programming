@@ -1,0 +1,101 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct Node
+{
+    ll sum{};
+    Node *left, *right;
+
+    // بنبدأ دايماً البوينترز بـ null عشان نعرف إن الفرع ده لسه متبناش
+    Node() : sum(0), left(nullptr), right(nullptr) {}
+};
+
+struct DynamicST
+{
+    ll MIN_VAL, MAX_VAL;
+    Node *root;
+
+    // التحديث (Point Update): بيضيف قيمة لعنصر في إندكس معين
+    void update(Node *node, ll lx, ll rx, ll idx, ll val)
+    {
+        if (lx == rx)
+        {
+            node->sum += val;
+            return;
+        }
+
+        // بنحسب المنتصف كده عشان نتجنب الـ Overflow لو الأرقام 10^18
+        ll m = lx + (rx - lx) / 2;
+
+        if (idx <= m)
+        {
+            // لو الفرع الشمال مش موجود، بنبنيه الأول
+            if (!node->left)
+                node->left = new Node();
+            update(node->left, lx, m, idx, val);
+        }
+        else
+        {
+            // لو الفرع اليمين مش موجود، بنبنيه الأول
+            if (!node->right)
+                node->right = new Node();
+            update(node->right, m + 1, rx, idx, val);
+        }
+
+        // تحديث مجموع الأب
+        node->sum = (node->left ? node->left->sum : 0) + (node->right ? node->right->sum : 0);
+    }
+
+    // الاستعلام (Range Query): بيجيب المجموع في رينج معين
+    ll query(Node *node, ll lx, ll rx, ll l, ll r)
+    {
+        // لو النود مش موجودة أصلاً (متعملهاش update)، يبقى قيمتها 0
+        if (!node || lx > r || rx < l)
+            return 0;
+
+        if (l <= lx && rx <= r)
+            return node->sum;
+
+        ll m = lx + (rx - lx) / 2;
+        return query(node->left, lx, m, l, r) + query(node->right, m + 1, rx, l, r);
+    }
+
+    // ==========================================
+    // Function Overloading (عشان سهولة الاستخدام)
+    // ==========================================
+
+    // بنبعتلها أصغر وأكبر قيمة ممكنة في المسألة (مثلاً 0 و 1e9)
+    DynamicST(ll min_v, ll max_v)
+    {
+        MIN_VAL = min_v;
+        MAX_VAL = max_v;
+        root = new Node(); // بننشئ الجدر بس في البداية
+    }
+
+    // بنناديها من المين على طول
+    void update(ll idx, ll val)
+    {
+        update(root, MIN_VAL, MAX_VAL, idx, val);
+    }
+
+    ll query(ll l, ll r)
+    {
+        return query(root, MIN_VAL, MAX_VAL, l, r);
+    }
+};
+
+int main()
+{
+    // شجرة المدى بتاعها من 0 لحد 10^9 (مليار)
+    DynamicST st(0, 1e9);
+
+    st.update(500000000, 10); // هنزود 10 في الإندكس نص مليار
+    st.update(100, 5);        // هنزود 5 في الإندكس 100
+
+    cout << st.query(0, 1e9) << "\n";  // هيطبع 15
+    cout << st.query(10, 200) << "\n"; // هيطبع 5 (اللي هي في إندكس 100 بس)
+
+    return 0;
+}
