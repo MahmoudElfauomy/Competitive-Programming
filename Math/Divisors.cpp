@@ -1,17 +1,14 @@
-vector<ll> divisors(ll n)
+vector<int> getDivisors(int64_t n)
 {
-    vector<ll> divisors;
-    for (int i = 1; i <= n / i; i++)
+    vector<int> ret;
+    for (int64_t i = 1; i * i <= n; ++i)
     {
         if (n % i == 0)
         {
-            divisors.push_back(i);
-            if (i * i != n)
-            {
-                divisors.push_back(n / i);
-            }
+            ret.push_back(i);
+            if (i != n / i) { ret.push_back(n / i); }
         }
     }
-    sort(divisors.begin(), divisors.end());
-    return divisors;
+    sort(ret.begin(), ret.end());
+    return ret;
 }
