@@ -1,0 +1,5 @@
+vector<int> getMultiples(int x, int n) {    // O(n/x)
+    vector<int> ret;
+    for (int m = x; m <= n; m += x) { ret.push_back(m); }
+    return ret;
+}
