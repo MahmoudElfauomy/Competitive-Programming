@@ -1,0 +1,99 @@
+struct HopcroftKarp
+{
+    // O(sqrt(V)*E)
+    int n, m;
+    vector<vector<int>> adj;
+    vector<int> match, level;
+    vector<bool> vis;
+
+    HopcroftKarp(int n, int m) : n(n), m(m)
+    {
+        adj.resize(n);
+        match.assign(n + m, -1);
+        level.resize(n);
+        vis.resize(n);
+    }
+
+    void addEdge(int u, int v) { adj[u].push_back(v + n); }
+
+    bool bfs()
+    {
+        fill(level.begin(), level.end(), -1);
+        queue<int> q;
+        for (int i = 0; i < n; i++)
+        {
+            if (match[i] == -1)
+            {
+                level[i] = 0;
+                q.push(i);
+            }
+        }
+        while (!q.empty())
+        {
+            int u = q.front();
+            q.pop();
+            for (int v : adj[u])
+            {
+                if (match[v] == -1) { return true; }
+                if (level[match[v]] == -1)
+                {
+                    level[match[v]] = level[u] + 1;
+                    q.push(match[v]);
+                }
+            }
+        }
+        return false;
+    }
+
+    bool dfs(int u)
+    {
+        vis[u] = true;
+        for (int v : adj[u])
+        {
+            if (match[v] == -1 || (!vis[match[v]] && level[match[v]] == level[u] + 1 && dfs(match[v])))
+            {
+                match[u] = v;
+                match[v] = u;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    int maxMatching()
+    {
+        int ans = 0;
+        while (bfs())
+        {
+            fill(vis.begin(), vis.end(), false);
+            for (int i = 0; i < n; i++)
+            {
+                if (match[i] == -1 && dfs(i)) { ans++; }
+            }
+        }
+        return ans;
+    }
+};
+
+
+void solve()
+{
+    int n, m;
+    cin >> n >> m;
+    HopcroftKarp T(n, m);
+
+    for (int i = 0; i < n; i++)
+    {
+        int sz;
+        cin >> sz;
+        for (int j = 0; j < sz; j++)
+        {
+            int o;
+            cin >> o;
+            o--;
+            T.addEdge(i, o);
+        }
+    }
+
+    cout << T.maxMatching();
+}
