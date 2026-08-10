@@ -1,0 +1,23 @@
+const int N = 1e6 + 6;
+vector<int64_t> primeN;
+ 
+void sieve()
+{
+    vector<bool> is_prime(N + 1, true);
+    is_prime[0] = is_prime[1] = false;
+ 
+    for (int64_t i = 2; i <= N; i++)
+    {
+        if (is_prime[i])
+        {
+            primeN.push_back(i);
+            if (i * i <= N)
+            {
+                for (int64_t j = i * i; j <= N; j += i)
+                {
+                    is_prime[j] = false;
+                }
+            }
+        }
+    }
+}
