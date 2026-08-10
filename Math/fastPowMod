@@ -1,0 +1,11 @@
+int fastPowMod(int64_t n, int64_t p)
+{
+    int64_t res = 1; 
+    while (p > 0)
+    {
+        if (p & 1) { (res *= n) %= mod; }
+        (n *= n) %= mod;
+        p >>= 1;
+    }
+    return res % mod;
+}
