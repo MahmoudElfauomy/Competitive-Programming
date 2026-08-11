@@ -162,7 +162,7 @@ void ac() {
     }
 
     vector<int> ans(id), time(n + 1);
-    seg_tree<node, 0, (int)1E6 + 5, true> st;
+    seg_tree<node, 0, (int)1E6 + 5, false> st;
     function<void(int, int)> dfs = [&](int u, int p) {
         st.push_back(time[p]);
         time[u] = st.cur_time();
