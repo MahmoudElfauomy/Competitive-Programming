@@ -1,3 +1,4 @@
+// O(sqrt(N))
 vector<int> getDivisors(int64_t n)
 {
     vector<int> ret;
