@@ -30,3 +30,11 @@ void dfs(int u, int p)
         }
     }
 }
+/////////////////////////////////// in main
+for (int u = 1; u <= n; u++)
+{
+   for (int i = 1; i <= sz[u]; i++) 
+   {
+      mx[i] = max(mx[i], dp[u][i]);
+   }
+}
