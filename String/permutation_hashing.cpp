@@ -1,3 +1,5 @@
+//الغرض منه إنك تقارن هل عنصرين/رنجين فيهم نفس الـ multiset من العناصر في 
+//O(1) تقريبًا لكل Query بعد O(n) preprocessing.
 std::mt19937_64 rng ( std::chrono::system_clock::now().time_since_epoch().count()) ;
 ll rand ( ll l , ll r )
 {
