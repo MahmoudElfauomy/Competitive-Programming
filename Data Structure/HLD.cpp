@@ -71,3 +71,9 @@ struct HLD
         }
     }
 };
+////////////////////////////////////////// in  main
+
+ HLD hl(n, ad);
+ vector<int> v(n + 1);
+ for (int i = 1; i <= n; i++)
+        v[hl.id[i]] = a[i];
