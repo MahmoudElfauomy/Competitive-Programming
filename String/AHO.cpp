@@ -84,6 +84,16 @@ struct AHO
 };
 /*
 
+    int q;
+    AHO ah;
+    cin >> q;
+    string s[q];
+    for (int i = 0; i < q; i++)
+        {
+        cin >> s[i];
+        ah.add_pattern(s[i], i);
+        }
+        ah.compute();
         int u = 0;
         for (int i = 0; i < x.size(); i++)
         {
