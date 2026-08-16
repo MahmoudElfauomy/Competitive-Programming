@@ -1,38 +1,45 @@
-class DSU
+struct DSU
 {
-    vector<int> root;
-    vector<int> sz;
+private:
+    int comp, mxSi;
+    vector<int> par, siz, mxNo;
+    vector<pair<int, int>> lst;
 
 public:
-    DSU(int n)
+    DSU(int n): par(n + 1), mxNo(n + 1), siz(n + 1, 1)
     {
-        root = vector<int>(n + 2);
-        sz = vector<int>(n + 2, 1);
-        for (int i = 0; i < n + 2; i++)
-        {
-            root[i] = i;
-        }
-    }
-    int getroot(int n)
-    {
-        if (n == root[n])
-            return n;
-        return root[n] = getroot(root[n]);
-    }
-    bool is_fr(int u, int v)
-    {
-        return getroot(u) == getroot(v);
+        comp = n, mxSi = 0;
+        iota(par.begin(), par.end(), 0);
+        mxNo = par;
     }
 
-    void make_fr(int u, int v)
+    int getRoot(int u)
     {
-        u = getroot(u);
-        v = getroot(v);
-        if (u == v)
-        {
-            return;
-        }
-        root[u] = v;
-        sz[v] += sz[u];
+        if (par[u] == u) { return u; }
+        return par[u] = getRoot(par[u]);
+    }
+
+    void merge(int u, int v)
+    {
+        u = getRoot(u), v = getRoot(v);
+        if (u == v) { return; }
+        if (siz[u] > siz[v]) { swap(u, v); }
+        lst.push_back({v, siz[u]});
+        par[u] = v;
+        siz[v] += siz[u];
+        mxSi = max(mxSi, siz[v]);
+        mxNo[v] = max(mxNo[v], mxNo[u]);
+        comp--;
+    }
+
+    bool sameRoot(int u, int v) { return getRoot(u) == getRoot(v); }
+
+    void rollBack()
+    {
+        auto [v, oldsz] = lst.back();
+        lst.pop_back();
+        int u = par[v];
+        par[v] = v;
+        siz[u] = oldsz;
     }
 };
