@@ -1,0 +1,22 @@
+// sum of divisors from 1 to n
+const int64_t mod = 1e9 + 7;
+int64_t n;
+cin >> n;
+auto sum = [&](int64_t l, int64_t r)
+{
+    // returns l + l + 1 + ... + r
+    r %= mod, l %= mod;
+    int64_t sum_r = (r * (r + 1)) / 2;
+    sum_r %= mod;
+    int64_t sum_l = (l * ((l - 1 + mod) % mod)) / 2;
+    sum_l %= mod;
+    return (sum_r - sum_l + mod) % mod;
+};
+int res = 0;
+for (int64_t l = 1, r = 1; (n / l); l = r + 1)
+{
+    r = (n / (n / l));
+    res += (sum(l, r) * (n / l)) % mod;
+    res %= mod;
+}
+cout << res;
