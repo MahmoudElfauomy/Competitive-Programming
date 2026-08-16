@@ -1,0 +1,11 @@
+
+string ConvertNfromdecimaltobaseK(int n,int k) {
+    ll cpn=n;
+    string s="";
+    while (cpn!=0) {
+        s+=(char(cpn%k)+'0');
+        cpn/=k;
+    }
+    reverse(s.begin(),s.end());
+    return s;
+}
