@@ -1,0 +1,13 @@
+int lis(vector<int>& v)
+{
+    // nlogn
+    int l = v.size();
+    vector<int> lis;
+    for (int i = 0; i < l; i++)
+    {
+        auto it = lower_bound(lis.begin(), lis.end(), v[i]) - lis.begin();
+        if (it == lis.size()) { lis.push_back(v[i]); }
+        else { lis[it] = v[i]; }
+    }
+    return lis.size();
+}
