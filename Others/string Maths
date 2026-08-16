@@ -1,0 +1,74 @@
+string sumTwoStrings(string a, string b)
+{
+    if (a.size() < b.size()) { swap(a, b); }
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+
+    string ans;
+    int carry = 0;
+
+    for (int i = 0; i < a.size(); i++)
+    {
+        int sum = (a[i] - '0') + carry;
+        if (i < b.size()) { sum += b[i] - '0'; }
+
+        ans += char(sum % 10 + '0');
+        carry = sum / 10;
+    }
+
+    if (carry) { ans += char(carry + '0'); }
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+string multiplyTwoStrings(string a, string b)
+{
+    int n = a.size(), m = b.size();
+    vector<int> res(n + m, 0);
+
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            res[i + j] += (a[i] - '0') * (b[j] - '0');
+            res[i + j + 1] += res[i + j] / 10;
+            res[i + j] %= 10;
+        }
+    }
+
+    while (res.size() > 1 && res.back() == 0) { res.pop_back(); }
+
+    string ans;
+    for (int i = res.size() - 1; i >= 0; i--) { ans += char(res[i] + '0'); }
+
+    return ans;
+}
+
+string subtractTwoStrings(string a, string b)
+{
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+
+    string ans;
+    int borrow = 0;
+
+    for (int i = 0; i < a.size(); i++)
+    {
+        int x = (a[i] - '0') - borrow;
+        int y = (i < b.size() ? b[i] - '0' : 0);
+
+        if (x < y) { x += 10, borrow = 1; }
+        else { borrow = 0; }
+
+        ans += char(x - y + '0');
+    }
+
+    while (ans.size() > 1 && ans.back() == '0') { ans.pop_back(); }
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
