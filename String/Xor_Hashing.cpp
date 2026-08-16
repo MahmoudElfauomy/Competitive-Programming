@@ -1,4 +1,10 @@
-// check if the elemnt in ranges are equal and donot care about arrangement
+/*
+    to make sure that each element in the array has an even frequancy
+
+    res == 0 -> even
+    else -> No
+*/
+
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 ll rand_ll(ll l, ll r)
