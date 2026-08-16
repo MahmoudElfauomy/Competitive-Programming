@@ -1,0 +1,7 @@
+int getMex(vector<int> v)
+{
+    set<int> st(v.begin(), v.end());
+    int k = 0;
+    while (st.count(k)) { k++; }
+    return k;
+}
