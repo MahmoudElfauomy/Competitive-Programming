@@ -1,0 +1,27 @@
+#include "bits/stdc++.h"
+using namespace std;
+#define ll long long
+// #define int long long
+const int N = 1e6 + 5, mod = 1e9 + 7;
+int dx[] = {0, 0, -1, 1, -1, -1, 1, 1};
+int dy[] = {1, -1, 0, 0, -1, 1, -1, 1};
+
+void solve()
+{
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    int testCases = 1;
+    // cin >> testCases;
+    while (testCases--)
+    {
+        solve();
+        cout << '\n';
+    }
+    return 0;
+}
