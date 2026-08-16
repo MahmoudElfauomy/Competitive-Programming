@@ -1,3 +1,4 @@
+int N = 1e6 + 5;
 vector<int> spf(N);
 
 void SPF()
