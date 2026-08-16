@@ -1,0 +1,12 @@
+
+vector<int> compress(vector<int> a) {
+    vector<int> vals = a;
+    sort(vals.begin(), vals.end());
+    vals.erase(unique(vals.begin(), vals.end()), vals.end());
+    
+    for (int &it : a) {
+        it = lower_bound(vals.begin(), vals.end(), it) - vals.begin();
+    }
+    
+    return a;
+}
