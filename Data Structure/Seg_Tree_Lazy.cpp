@@ -106,6 +106,25 @@ private:
         return ans ;
     }
 
+    //! needs max 
+    //! 0 index
+    // ll find_first ( ll x , ll lx , ll rx , ll l , ll r , ll val )
+    // {
+    //     if ( rx < l || lx > r ) return -1 ;
+    //     //! lower
+    //     if ( seg[x].mx < val ) return -1 ;
+    //     //! upper
+        // if ( seg[x].mx <= val ) return -1 ;
+    //     if ( lx == rx ) return lx ;
+    //     ll left_child = (2 * x) + 1 ;
+    //     ll right_child = (2 * x) + 2 ;
+    //     ll mid = (lx + rx) / 2 ;
+
+    //     ll res = find_first( left_child , lx , mid , l , r , val ) ;
+    //     if ( res != -1 ) return res ;
+    //     return find_first( right_child , mid + 1 , rx , l , r , val ) ;
+    // }
+
 public:
     segment_tree_lazy( vector <ll>& v )
     {
@@ -126,4 +145,9 @@ public:
     {
         return query ( 0 , 0 , sz - 1 , l , r ) ;
     }
+    // ll find_first( ll l , ll r , ll val )
+    // {
+    //     if ( l > r ) return -1 ;
+    //     return find_first( 0 , 0 , sz - 1 , l , r , val ) ;
+    // }
 };
