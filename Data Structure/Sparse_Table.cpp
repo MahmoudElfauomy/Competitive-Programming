@@ -1,31 +1,59 @@
-class Sparse_table
+class sparseTable
 {
-    vector<vector<int>> sp;
-    int sz, n;
-    void build()
+    struct node
     {
-        for (int i = 1; i <= sz; i++)
+        int64_t n = 0, mn, mx, sum;
+
+        node()
         {
-            for (int j = 0; j + (1 << (i)) - 1 < n; j++)
+            sum = 0;
+            mn = 1e18;
+            mx = -1e18;
+        }
+    };
+
+
+    vector<vector<node>> sp;
+    vector<int> Log;
+
+    node merge(node a, node b)
+    {
+        node ret;
+
+        return ret;
+    }
+
+public:
+    sparseTable(vector<int64_t>& v)
+    {
+        // build
+        int n = v.size();
+        sp.resize(n + 5, vector<node>(__lg(n) + 5));
+
+        Log.resize(n + 5);
+        Log[1] = 0;
+        for (int i = 2; i <= n; i++) { Log[i] = Log[i >> 1] + 1; }
+
+
+        for (int i = 0; i < n; i++)
+        {
+            ///////////////////
+            sp[i][0].mn = v[i];
+            sp[i][0].mx = v[i];
+        }
+
+        for (int k = 1; k <= __lg(n); k++)
+        {
+            for (int i = 0; i + (1 << k) <= n; i++)
             {
-                sp[i][j] = min(sp[i - 1][j], sp[i - 1][j + (1 << (i - 1))]);
+                sp[i][k] = merge(sp[i][k - 1], sp[i + (1LL << (k - 1))][k - 1]);
             }
         }
     }
 
-public:
-    Sparse_table(vector<int> &v)
+    node query(int l, int r)
     {
-        n = v.size();
-        sz = __lg(n);
-        sp = vector<vector<int>>(sz + 1, vector<int>(n));
-        for (int i = 0; i < n; i++)
-            sp[0][i] = v[i];
-        build();
-    }
-    int query(int l, int r)
-    {
-        int n = __lg(r - l + 1);
-        return min(sp[n][l], sp[n][r - (1 << n) + 1]);
+        int64_t k = Log[r - l + 1];
+        return merge(sp[l][k], sp[r - (1 << k) + 1][k]);
     }
 };
