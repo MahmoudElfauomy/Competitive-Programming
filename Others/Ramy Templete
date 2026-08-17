@@ -1,18 +1,8 @@
 
-#include <bits/stdc++.h>
-#define ll long long
-#define el '\n'
 #define all(v) v.begin(), v.end()
 #define allr(v) v.rbegin(), v.rend()
-using namespace std ;
 
 const double PI = acos(-1.0) ;
-#define ON( n , x ) ((n) | (1 << (x))) 
-#define OFF( n , x ) ((n) & ~ (1 << (x))) 
-#define isON( n , x ) (((n) >> (x)) & 1 ) 
-
-int dx[] = { 0 , 0 , 1 , -1 , -1 , 1 , -1 , 1 } ;
-int dy[] = { 1 , -1 , 0 , 0 , -1 , 1 , 1 , -1 } ;
 
 /*==============================================*/
 struct cmp
