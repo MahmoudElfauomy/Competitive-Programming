@@ -58,4 +58,22 @@ public:
         }
         return cur->last;
     }
+
+    int mx_pref(const string &s)
+    {
+        Node *cur = root;
+        int ret = 0;
+        for (auto it : s)
+        {
+            int idx = it - 'a';
+            if (cur->ch[idx] == 0 || cur->ch[idx]->pre < 2)
+            {
+                return ret;
+            }
+
+            ret++;
+            cur = cur->ch[idx];
+        }
+        return ret;
+    }
 };
