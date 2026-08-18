@@ -57,6 +57,22 @@ struct PST
         return query(node->left, lx, m, l, r) + query(node->right, m + 1, rx, l, r);
     }
 
+    /*
+
+    int query(Node *u, Node *v, int lx, int rx, int k) {
+        if (lx == rx)return lx;
+        int m = (lx + rx) >> 1;
+        int left = u->left->val - v->left->val;
+        if (left >= k)return query(u->left, v->left, lx, m, k);
+        return query(u->right, v->right, m + 1, rx, k - left);
+    }
+
+
+    ll query(int u, int v, int k) {
+        return query(roots[u], roots[v], 0, n - 1, k);
+    }
+    
+*/    
     PST(vector<int> &a)
     {
         n = a.size();
